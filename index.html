@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>David Golden — Senior Technical Writer</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0D2B45;
+      --blue:   #1A6BB5;
+      --blue-lt:#EBF4FF;
+      --gold:   #C9A84C;
+      --ink:    #1A1A1A;
+      --muted:  #5A6472;
+      --border: #DDE3EA;
+      --bg:     #FFFFFF;
+      --bg-alt: #F7F9FC;
+      --max:    1080px;
+      --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--bg);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    nav .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 54px;
+    }
+
+    nav .nav-name {
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.875rem;
+      letter-spacing: 0.02em;
+      transition: color 0.15s;
+    }
+
+    nav ul a:hover { color: #fff; }
+
+    /* ── Hero ─────────────────────────────────────────────────── */
+    .hero {
+      background: var(--navy);
+      color: #fff;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero .role {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero .tagline {
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.9);
+      max-width: 640px;
+      margin: 0 auto 2rem;
+      line-height: 1.5;
+    }
+
+    .hero .tagline strong { color: #fff; }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.65rem 1.4rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .btn:hover { opacity: 0.85; }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* ── Stats bar ────────────────────────────────────────────── */
+    .stats {
+      background: #0B2539;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 1.25rem 2rem;
+    }
+
+    .stats-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── Sections ─────────────────────────────────────────────── */
+    section {
+      padding: 4.5rem 2rem;
+    }
+
+    section:nth-of-type(even) {
+      background: var(--bg-alt);
+    }
+
+    .section-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+
+    .section-intro {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 640px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    /* ── Work cards ───────────────────────────────────────────── */
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(440px, 100%), 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.75rem 1.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      border-color: #C3D3E8;
+    }
+
+    .card-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.6rem;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.85rem;
+      line-height: 1.35;
+    }
+
+    .card-block {
+      margin-bottom: 0.7rem;
+    }
+
+    .card-block dt {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .card-block dd {
+      font-size: 0.925rem;
+      color: var(--ink);
+      line-height: 1.55;
+      margin-left: 0;
+    }
+
+    .card-result dd {
+      color: #0E5C2E;
+      font-weight: 500;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      padding-top: 1.25rem;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .card-link {
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--blue);
+      text-decoration: none;
+      border: 1px solid var(--blue);
+      border-radius: 3px;
+      padding: 0.3rem 0.75rem;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .card-link:hover {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .card-link.disabled {
+      color: var(--muted);
+      border-color: var(--border);
+      pointer-events: none;
+    }
+
+    /* ── About ────────────────────────────────────────────────── */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-body p {
+      font-size: 1.025rem;
+      line-height: 1.75;
+      color: var(--ink);
+      margin-bottom: 1.1rem;
+    }
+
+    .about-body p:last-child { margin-bottom: 0; }
+
+    .about-sidebar {
+      background: var(--blue-lt);
+      border: 1px solid #C5DCF5;
+      border-radius: 6px;
+      padding: 1.5rem;
+    }
+
+    .about-sidebar h4 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 1rem;
+    }
+
+    .skill-list {
+      list-style: none;
+      font-size: 0.9rem;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .skill-list li {
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(26,107,181,0.12);
+    }
+
+    .skill-list li:last-child { border-bottom: none; }
+
+    /* ── Contact ──────────────────────────────────────────────── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .contact-option {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.75rem;
+    }
+
+    .contact-option h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-option p {
+      font-size: 0.925rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Footer ───────────────────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+    }
+
+    footer a:hover { color: #fff; }
+
+    /* ── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 720px) {
+      .work-grid { grid-template-columns: 1fr; }
+      .about-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-layout { grid-template-columns: 1fr; gap: 1.5rem; }
+      .stats-inner { gap: 1.75rem; }
+      nav ul { gap: 1.25rem; }
+    }
+
+    /* ── Accordion chevron (hidden on desktop) ───────────────── */
+    .card-chevron {
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      nav .nav-inner { padding: 0 1rem; }
+      nav ul { gap: 1rem; }
+      nav ul a { font-size: 0.8rem; }
+
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+      .hero .role { font-size: 0.7rem; }
+
+      .stats-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem 1.5rem;
+        text-align: center;
+      }
+
+      section { padding: 3rem 1.25rem; }
+
+      .card { padding: 1.25rem; cursor: pointer; user-select: none; }
+      .card h3 { font-size: 0.975rem; }
+      .card-block dd { font-size: 0.875rem; }
+
+      .about-sidebar { padding: 1.25rem; }
+
+      .contact-option { padding: 1.25rem; }
+
+      /* Accordion */
+      .card-chevron {
+        display: inline-block;
+        float: right;
+        font-size: 1rem;
+        color: var(--blue);
+        transition: transform 0.2s ease;
+        margin-left: 0.5rem;
+        line-height: 1.4;
+      }
+
+      .card-body {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.3s ease, margin-top 0.2s ease;
+        margin-top: 0;
+      }
+
+      .card--open .card-body {
+        max-height: 800px;
+        margin-top: 0.75rem;
+      }
+
+      .card--open .card-chevron {
+        transform: rotate(180deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ──────────────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-name">David Golden</a>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────────────────────────── -->
+<div class="hero">
+  <p class="role">Senior Technical Writer</p>
+  <h1>David Golden</h1>
+  <p class="tagline">
+    <strong>I get your customers off the support page</strong> <span style="font-weight:300">and back to their tasks.</span>
+  </p>
+  <div class="hero-cta">
+    <a href="#work" class="btn btn-primary">See my work</a>
+    <a href="#contact" class="btn btn-outline">Get in touch</a>
+  </div>
+</div>
+
+<!-- ── Stats ────────────────────────────────────────────────────── -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat">
+      <span class="stat-number">20 yrs</span>
+      <span class="stat-label">Technical Writing</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">26</span>
+      <span class="stat-label">Annual Releases</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">1,700+</span>
+      <span class="stat-label">Support Cases Cited</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">145,086</span>
+      <span class="stat-label">Records Migrated</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── Work ─────────────────────────────────────────────────────── -->
+<section id="work">
+  <div class="section-inner">
+    <p class="section-label">Portfolio</p>
+    <h2 class="section-title">Selected Work</h2>
+    <p class="section-intro">
+      Each project below is a problem I was handed and a result I can point to.
+      Samples are linked where they're publicly accessible.
+    </p>
+
+    <div class="work-grid">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <p class="card-tag">Knowledge Base · MadCap Flare · XML</p>
+        <h3>Enterprise Knowledge Base — Pitney Bowes Shipping &amp; Mailing <span class="card-chevron" aria-hidden="true">▾</span></h3>
+        <div class="card-body">
+          <dl>
+            <div class="card-block">
+              <dt>Problem</dt>
+              <dd>Support volume was high and customers had no reliable self-service path for enterprise shipping and mailing products.</dd>
+            </div>
+            <div class="card-block">
+              <dt>What I did</dt>
+              <dd>Owned and wrote the full knowledge base for multiple product lines in MadCap Flare — user guides, admin guides, installation guides, and KB articles — delivering across 26 annual releases with 90% shipped same-day.</dd>
+            </div>
+            <div class="card-block card-result">
+              <dt>Result</dt>
+              <dd>My articles were cited in 1,700+ support cases. Top articles referenced 700+ times each.</dd>
+            </div>
+          </dl>
+          <div class="card-footer">
+            <a href="https://davidgolden99-oxnis.wordpress.com" class="card-link" target="_blank">View samples →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <p class="card-tag">Compliance Docs · 21 CFR Part 11 · Regulated</p>
+        <h3>Clinical Research System Documentation — Pfizer <span class="card-chevron" aria-hidden="true">▾</span></h3>
+        <div class="card-body">
+          <dl>
+            <div class="card-block">
+              <dt>Problem</dt>
+              <dd>Enterprise clinical research systems required documentation that could survive an FDA audit — accurate and version-controlled throughout the review cycle.</dd>
+            </div>
+            <div class="card-block">
+              <dt>What I did</dt>
+              <dd>Wrote and maintained compliance documentation and SOPs under 21 CFR Part 11, working directly with Regulatory Affairs, Legal, Quality, and Engineering throughout the review cycle.</dd>
+            </div>
+            <div class="card-block card-result">
+              <dt>Result</dt>
+              <dd>700+ global users trained; 100% completion rate. Documentation cleared regulatory review.</dd>
+            </div>
+          </dl>
+          <div class="card-footer">
+            <span class="card-link disabled">Confidential</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <p class="card-tag">Interactive · Articulate Storyline · UX</p>
+        <h3>Guided Troubleshooting Tool — Pitney Bowes <span class="card-chevron" aria-hidden="true">▾</span></h3>
+        <div class="card-body">
+          <dl>
+            <div class="card-block">
+              <dt>Problem</dt>
+              <dd>Users with hardware and software issues needed a faster path to resolution than reading a manual — especially under time pressure in shipping operations.</dd>
+            </div>
+            <div class="card-block">
+              <dt>What I did</dt>
+              <dd>Designed and built an interactive solution finder in Articulate Storyline. Users answer a short branching sequence; the tool routes them to the right fix without involving support.</dd>
+            </div>
+            <div class="card-block card-result">
+              <dt>Result</dt>
+              <dd>Users get to a fix without calling support. The branching logic handles triage that would otherwise go to a technician.</dd>
+            </div>
+          </dl>
+          <div class="card-footer">
+            <a href="storyline-demo/story_html5.html" class="card-link" target="_blank">View demo →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <p class="card-tag">Python · MySQL · Flask · Data Migration</p>
+        <h3>Music Library Catalog Migration — WPKN 89.5 FM <span class="card-chevron" aria-hidden="true">▾</span></h3>
+        <div class="card-body">
+          <dl>
+            <div class="card-block">
+              <dt>Problem</dt>
+              <dd>A 60-year catalog (dating to 1963) lived in Microsoft Access, assembled from paper cards, dBASE, and Excel over decades. Programmers searched exported spreadsheets on Google Drive. 23,772 digital files on a server drive were uncatalogued entirely.</dd>
+            </div>
+            <div class="card-block">
+              <dt>What I did</dt>
+              <dd>Standardized 110,000+ genre tags into 43 controlled vocabulary terms. Catalogued the digital collection from scratch. Migrated 145,086 records into MySQL across 6 tables with referential integrity. Built a Flask search interface with artist, title, genre, style, and local-artists filters — presented as a live proof of concept to the board in April 2026.</dd>
+            </div>
+            <div class="card-block card-result">
+              <dt>Result</dt>
+              <dd>99,553 records now searchable in real time. Access and Google Drive spreadsheets retired. Deploying to library.wpkn.org.</dd>
+            </div>
+          </dl>
+          <div class="card-footer">
+            <a href="#contact" class="card-link">Request demo →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── About ─────────────────────────────────────────────────────── -->
+<section id="about">
+  <div class="section-inner">
+    <p class="section-label">About</p>
+    <h2 class="section-title">The 30-second version</h2>
+
+    <div class="about-layout">
+      <div class="about-body">
+        <p>
+          I'm a senior technical writer with 20 years of experience turning complex
+          systems into documentation that people use. My career has run through
+          enterprise shipping and mailing software at Pitney Bowes and FDA-regulated
+          clinical research systems at Pfizer — two environments where unclear
+          documentation creates real, measurable problems.
+        </p>
+        <p>
+          I work in MadCap Flare (18 years), build in XML-based single-source
+          authoring workflows, and have managed everything from localization across
+          6 languages to knowledge base programs that serve as a company's primary
+          support deflection layer. I'm also comfortable enough in Python and SQL to
+          build the tools the documentation runs on.
+        </p>
+        <p>
+          I'm based in Milford, CT and open to full-time roles and fractional
+          engagements. If you're moving off Word and SharePoint into something
+          topic-based and task-driven, I've done that before — get in touch.
+        </p>
+      </div>
+
+      <aside class="about-sidebar">
+        <h4>Core tools &amp; skills</h4>
+        <ul class="skill-list">
+          <li>MadCap Flare — 18 years</li>
+          <li>XML / DITA-adjacent structured authoring</li>
+          <li>Adobe FrameMaker, Acrobat</li>
+          <li>Microsoft Office 365</li>
+          <li>Articulate Storyline</li>
+          <li>Jira, Confluence, SharePoint</li>
+          <li>GitLab, Subversion</li>
+          <li>Python, MySQL, Flask</li>
+          <li>21 CFR Part 11 / regulated environments</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ────────────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label">Contact</p>
+    <h2 class="section-title">Two ways to work together</h2>
+    <p class="section-intro">
+      I'm currently available for both full-time roles and fractional engagements.
+    </p>
+
+    <div class="contact-layout">
+
+      <div class="contact-option">
+        <h3>Full-time role</h3>
+        <p>
+          Looking for a senior technical writer or documentation lead with deep
+          enterprise and regulated-environment experience. I'm open to remote,
+          hybrid, and on-site in the CT/NY metro area.
+        </p>
+        <a href="mailto:davidgolden99@gmail.com?subject=Full-time opportunity" class="btn btn-primary">
+          Send me a note
+        </a>
+      </div>
+
+      <div class="contact-option">
+        <h3>Fractional retainer</h3>
+        <p>
+          If you need a senior writer for a specific project or quarter without
+          a full-time commitment, that's the retainer model. I work with companies
+          on a monthly basis.
+        </p>
+        <a href="mailto:davidgolden99@gmail.com?subject=Fractional engagement inquiry" class="btn btn-primary">
+          Start the conversation
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────────────── -->
+<footer>
+  <p>
+    David Golden &nbsp;·&nbsp;
+    <a href="mailto:davidgolden99@gmail.com">davidgolden99@gmail.com</a>
+    &nbsp;·&nbsp; 203-506-6334 &nbsp;·&nbsp; Milford, CT
+    &nbsp;·&nbsp;
+    <a href="https://linkedin.com/in/davidgolden99" target="_blank">LinkedIn</a>
+  </p>
+</footer>
+
+<script>
+  (function () {
+    function initAccordion() {
+      if (window.innerWidth > 480) return;
+      document.querySelectorAll('.card').forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') return; // let links through
+          card.classList.toggle('card--open');
+        });
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAccordion);
+    } else {
+      initAccordion();
+    }
+  })();
+</script>
+</body>
+</html>
