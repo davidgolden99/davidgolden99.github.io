@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — David Golden</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X81694L2BY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-X81694L2BY');
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0D2B45;
+      --blue:   #1A6BB5;
+      --blue-lt:#EBF4FF;
+      --gold:   #C9A84C;
+      --ink:    #1A1A1A;
+      --muted:  #5A6472;
+      --border: #DDE3EA;
+      --bg:     #FFFFFF;
+      --bg-alt: #F7F9FC;
+      --max:    1080px;
+      --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--ink); background: var(--bg); font-size: 16px; line-height: 1.6; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    nav .nav-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 54px;
+    }
+    nav .nav-name { color: #fff; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.875rem; letter-spacing: 0.02em; transition: color 0.15s; }
+    nav ul a:hover, nav ul a.active { color: #fff; }
+
+    .page-header {
+      background: var(--navy); color: #fff;
+      padding: 3.5rem 2rem 3rem;
+    }
+    .page-header-inner { max-width: var(--max); margin: 0 auto; }
+    .page-header p { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .page-header h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; }
+
+    main { max-width: var(--max); margin: 0 auto; padding: 3rem 2rem; }
+
+    .post-list { list-style: none; display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .post-item {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.75rem;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .post-item:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); border-color: #C3D3E8; }
+
+    .post-meta { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .post-item h2 { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; line-height: 1.35; }
+    .post-item h2 a { text-decoration: none; color: inherit; }
+    .post-item h2 a:hover { color: var(--blue); }
+    .post-excerpt { font-size: 0.95rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
+    .read-more { font-size: 0.85rem; font-weight: 600; color: var(--blue); text-decoration: none; }
+    .read-more:hover { text-decoration: underline; }
+
+    footer {
+      background: var(--navy); color: rgba(255,255,255,0.45);
+      text-align: center; padding: 1.5rem 2rem; font-size: 0.8rem; margin-top: 4rem;
+    }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 480px) {
+      nav .nav-inner { padding: 0 1rem; }
+      nav ul { gap: 1rem; }
+      nav ul a { font-size: 0.8rem; }
+      main { padding: 2rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-name">David Golden</a>
+    <ul>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#contact">Contact</a></li>
+      <li><a href="/blog/" class="active">Blog</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p>Writing</p>
+    <h1>Blog</h1>
+  </div>
+</div>
+
+<main>
+  <ul class="post-list">
+
+    <li class="post-item">
+      <p class="post-meta">June 15, 2026 &nbsp;·&nbsp; Job Search &nbsp;·&nbsp; Tools</p>
+      <h2><a href="/blog/01-dashboard.html">I've applied to 415 jobs. Here's the tool I built to stay sane.</a></h2>
+      <p class="post-excerpt">Nine months into a job search, I had 200 rows in a spreadsheet, tabs open everywhere, and no system. So I built one — a local Flask dashboard that reads my tracker, surfaces my active pipeline, and connects to Apple Mail. Here's what I learned.</p>
+      <a href="/blog/01-dashboard.html" class="read-more">Read more →</a>
+    </li>
+
+  </ul>
+</main>
+
+<footer>
+  <p>
+    David Golden &nbsp;·&nbsp;
+    <a href="mailto:david@davidgolden.io">david@davidgolden.io</a>
+    &nbsp;·&nbsp; 203-506-6334 &nbsp;·&nbsp; Milford, CT
+    &nbsp;·&nbsp;
+    <a href="https://linkedin.com/in/davidgolden99" target="_blank">LinkedIn</a>
+  </p>
+</footer>
+
+</body>
+</html>

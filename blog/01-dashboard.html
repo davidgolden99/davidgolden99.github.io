@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I've applied to 415 jobs. Here's the tool I built to stay sane. — David Golden</title>
+  <meta name="description" content="Nine months into a job search, I built a local Flask dashboard to track my pipeline. Here's what it does and what 415 applications taught me." />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X81694L2BY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-X81694L2BY');
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0D2B45;
+      --blue:   #1A6BB5;
+      --blue-lt:#EBF4FF;
+      --gold:   #C9A84C;
+      --ink:    #1A1A1A;
+      --muted:  #5A6472;
+      --border: #DDE3EA;
+      --bg:     #FFFFFF;
+      --bg-alt: #F7F9FC;
+      --max:    1080px;
+      --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--ink); background: var(--bg); font-size: 16px; line-height: 1.6; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    nav .nav-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 54px;
+    }
+    nav .nav-name { color: #fff; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.875rem; letter-spacing: 0.02em; transition: color 0.15s; }
+    nav ul a:hover, nav ul a.active { color: #fff; }
+
+    .page-header {
+      background: var(--navy); color: #fff;
+      padding: 3.5rem 2rem 3rem;
+    }
+    .page-header-inner { max-width: 720px; margin: 0 auto; }
+    .breadcrumb { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 1rem; }
+    .breadcrumb a { color: rgba(255,255,255,0.6); text-decoration: none; }
+    .breadcrumb a:hover { color: #fff; }
+    .page-header h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; margin-bottom: 1rem; }
+    .post-meta { font-size: 0.8rem; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; }
+
+    article {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    article h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 2.25rem 0 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    article p {
+      font-size: 1.025rem;
+      line-height: 1.75;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+
+    article a { color: var(--blue); }
+    article a:hover { text-decoration: none; }
+
+    .post-footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem 3rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .post-footer a {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--blue);
+      text-decoration: none;
+    }
+    .post-footer a:hover { text-decoration: underline; }
+
+    footer {
+      background: var(--navy); color: rgba(255,255,255,0.45);
+      text-align: center; padding: 1.5rem 2rem; font-size: 0.8rem; margin-top: 2rem;
+    }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 480px) {
+      nav .nav-inner { padding: 0 1rem; }
+      nav ul { gap: 1rem; }
+      nav ul a { font-size: 0.8rem; }
+      article, .post-footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-name">David Golden</a>
+    <ul>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#contact">Contact</a></li>
+      <li><a href="/blog/" class="active">Blog</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="breadcrumb"><a href="/blog/">Blog</a> &nbsp;/</p>
+    <h1>I've applied to 415 jobs. Here's the tool I built to stay sane.</h1>
+    <p class="post-meta">June 15, 2026 &nbsp;·&nbsp; Job Search &nbsp;·&nbsp; Tools</p>
+  </div>
+</div>
+
+<article>
+
+  <p>Nine months ago, Pitney Bowes ended my role after 18 years. I'd documented large-scale industrial hardware, trained global teams, and built knowledge systems from scratch. Then I was job-hunting, and the job hunt itself had no system.</p>
+
+  <p>Within weeks I had a spreadsheet with 50 rows. Then 100. Then 200. I had tabs open for LinkedIn, Indeed, email threads with recruiters, a Notes app full of company research. I knew where every piece of documentation was supposed to live at Pitney Bowes. I had no idea where anything was in my own job search.</p>
+
+  <p>So I did what I do: I built something.</p>
+
+  <h2>The tool</h2>
+
+  <p>It's a local Flask app that runs on my MacBook. Nothing in the cloud, no SaaS vendor with access to my data. It reads from the Excel tracker I already had and surfaces what I actually need to see.</p>
+
+  <p>The home screen shows my active pipeline as cards, unread mail from my job search inbox, and a next-steps checklist that writes back to the source file when I check things off. One click opens Apple Mail with a follow-up draft pre-addressed to the right person. Another pulls fresh pipeline status directly from the tracker. There's a full search across 415 application rows, pipeline notes, and company research in one box.</p>
+
+  <p>I also built a snapshot feature that pushes a mobile-friendly HTML file to iCloud. When a recruiter calls and I'm away from my desk, I have my full pipeline on my phone in about three seconds.</p>
+
+  <h2>Why not just use Teal or Huntr</h2>
+
+  <p>I tried them. They're fine for logging applications, but they don't connect to my email, my notes, or my contacts workflow. I also wanted to understand what I was looking at. Designing the data model for my own job search forced me to define what "active" actually means. (Stage at screening or above, or Result explicitly marked pending. Everything else is noise.)</p>
+
+  <p>Building the system is part of how I think through a problem. That's probably not true for everyone, but it's true for me.</p>
+
+  <h2>What 415 applications taught me</h2>
+
+  <p>There's a lot of signal in that data. I advance consistently in enterprise environments, regulated industries, and government contracting. Tech startups filter me out early, usually because I don't have Docs-as-Code experience. That's a gap I can close, but I wouldn't have seen it clearly without a system.</p>
+
+  <p>My pipeline right now has four live items: Metro-North Railroad, Censis Technologies, Planet Pharma via Medtronic, and a fractional pitch to Bluecrest. I know exactly where each one stands, who the contact is, what the salary range looks like, and what the next action is.</p>
+
+  <h2>The skills transfer</h2>
+
+  <p>Twenty years of technical documentation and knowledge management is, among other things, training in information architecture and workflow design. Knowing what to track, what to ignore, and where things live. Those skills don't stop mattering between jobs. That's when they matter most.</p>
+
+  <p>The code is on GitHub: <a href="https://github.com/davidgolden99/job-search" target="_blank">github.com/davidgolden99/job-search</a></p>
+
+</article>
+
+<div class="post-footer">
+  <a href="/blog/">← Back to Blog</a>
+  <a href="mailto:david@davidgolden.io?subject=Re: your dashboard post">Reply by email</a>
+</div>
+
+<footer>
+  <p>
+    David Golden &nbsp;·&nbsp;
+    <a href="mailto:david@davidgolden.io">david@davidgolden.io</a>
+    &nbsp;·&nbsp; 203-506-6334 &nbsp;·&nbsp; Milford, CT
+    &nbsp;·&nbsp;
+    <a href="https://linkedin.com/in/davidgolden99" target="_blank">LinkedIn</a>
+  </p>
+</footer>
+
+</body>
+</html>
