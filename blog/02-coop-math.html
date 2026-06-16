@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>I've applied to 415 jobs. Here's the tool I built to stay sane. — David Golden</title>
-  <meta name="description" content="Nine months into a job search, I built a local Flask dashboard to track my pipeline. Here's what it does and what 415 applications taught me." />
+  <title>Co-op math has a circular dependency. Here's how I solved it. — David Golden</title>
+  <meta name="description" content="Buying a New York co-op while selling a house creates a reserve calculation that depends on itself. The fix is a closed-form solution — and a tool to make the numbers obvious." />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-X81694L2BY"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -81,12 +81,23 @@
     article a { color: var(--blue); }
     article a:hover { text-decoration: none; }
 
+    .formula {
+      background: var(--bg-alt);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 4px 4px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95rem;
+      color: var(--navy);
+      line-height: 1.6;
+    }
+
     .post-footer {
       max-width: 720px;
       margin: 0 auto;
-      padding: 0 2rem 3rem;
+      padding: 2rem 2rem 3rem;
       border-top: 1px solid var(--border);
-      padding-top: 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -134,50 +145,54 @@
 <div class="page-header">
   <div class="page-header-inner">
     <p class="breadcrumb"><a href="/blog/">Blog</a> &nbsp;/</p>
-    <h1>I've applied to 415 jobs. Here's the tool I built to stay sane.</h1>
-    <p class="post-meta">June 15, 2026 &nbsp;·&nbsp; Job Search &nbsp;·&nbsp; Tools</p>
+    <h1>Co-op math has a circular dependency. Here's how I solved it.</h1>
+    <p class="post-meta">June 16, 2026 &nbsp;·&nbsp; Tools &nbsp;·&nbsp; Personal Finance</p>
   </div>
 </div>
 
 <article>
 
-  <p>Nine months ago I got caught on the wrong end of a downsizing at Pitney Bowes. Eighteen years there, gone in a meeting.</p>
+  <p>I'm selling my house in Connecticut and buying a co-op in the Bronx at the same time. This turns out to be harder to model than I expected — not because of the moving parts individually, but because of how they connect.</p>
 
-  <p>Within weeks I had a spreadsheet with 50 rows. Then 100. Then 200. I had tabs open for LinkedIn, Indeed, email threads with recruiters, a Notes app full of company research. I knew where every piece of documentation was supposed to live at Pitney Bowes. I had no idea where anything was in my own job search.</p>
+  <h2>The problem</h2>
 
-  <p>So I did what I do: I built something.</p>
+  <p>Co-op boards in New York typically require you to hold a reserve in liquid assets after closing. Not at closing — after. The board wants to see that you can cover your monthly obligations even if something goes wrong. Depending on the building, that requirement might be anywhere from six to twenty-four months of combined mortgage payment and maintenance.</p>
+
+  <p>That creates a circular problem.</p>
+
+  <p>Your down payment determines your loan amount. Your loan amount determines your mortgage payment. Your mortgage payment determines how much reserve the board requires. And the reserve is money you hold back from your available proceeds — which reduces what you can put toward a down payment.</p>
+
+  <p>Each variable depends on the others. You can't solve for one without knowing the rest.</p>
+
+  <h2>The math</h2>
+
+  <p>I could have iterated — guess a reserve, compute a mortgage, recompute the reserve, repeat until it converges. That works. But there's an exact solution.</p>
+
+  <p>Let <em>A</em> be your available proceeds after selling costs and debt payoff. Let <em>P</em> be the purchase price, <em>m</em> the monthly maintenance, <em>N</em> the required reserve months, and <em>k</em> the mortgage payment factor for a given rate and term. The reserve satisfies:</p>
+
+  <div class="formula">reserve = N × (k × (P − A) + m) / (1 − N × k)</div>
+
+  <p>One equation, one answer. Plug in your numbers, get the exact reserve, down payment, and loan amount — no approximation.</p>
 
   <h2>The tool</h2>
 
-  <p>It's a local Flask app that runs on my MacBook. Nothing in the cloud, no SaaS vendor with access to my data. It reads from the Excel tracker I already had and surfaces what I actually need to see.</p>
+  <p>I added an interactive calculator to the home sale dashboard I was already running. You dial in a sale price, a purchase price and maintenance figure, a mortgage rate and term, and the board's reserve requirement. Everything recalculates on every keystroke.</p>
 
-  <p>The home screen shows my active pipeline as cards, unread mail from my job search inbox, and a next-steps checklist that writes back to the source file when I check things off. One click opens Apple Mail with a follow-up draft pre-addressed to the right person. Another pulls fresh pipeline status directly from the tracker. There's a full search across 415 application rows, pipeline notes, and company research in one box.</p>
+  <p>The monthly total gets color coding: green if you're comfortable, gold if you're stretching, red if it's too much. There's a save function that snapshots the inputs and outputs to a local file, and a CSV export for any scenario you want to revisit. The whole thing runs locally — no data leaves the machine.</p>
 
-  <p>I also built a snapshot feature that pushes a mobile-friendly HTML file to iCloud. When a recruiter calls and I'm away from my desk, I have my full pipeline on my phone in about three seconds.</p>
+  <h2>What it produced</h2>
 
-  <h2>Why not just use Teal or Huntr</h2>
+  <p>Running the numbers on the first building I viewed made the tradeoff immediate. The views were spectacular. The units needed work. And the board required twenty-four months of reserves — nearly double what I'd find elsewhere in the neighborhood. The tool made the cost of that requirement concrete, not abstract. I passed.</p>
 
-  <p>I tried them. They're fine for logging applications, but they don't connect to my email, my notes, or my contacts workflow. I also wanted to understand what I was looking at. Designing the data model for my own job search forced me to define what "active" actually means. (Stage at screening or above, or Result explicitly marked pending. Everything else is noise.)</p>
+  <p>Now I have a clear target range for the search: a purchase price ceiling, a maintenance ceiling, a reserve months assumption, and a monthly total I'm comfortable with. Every new listing gets measured against those numbers before I schedule a showing.</p>
 
-  <p>Building the system is part of how I think through a problem. That's probably not true for everyone, but it's true for me.</p>
-
-  <h2>What 415 applications taught me</h2>
-
-  <p>There's a lot of signal in that data. I advance consistently in enterprise environments, regulated industries, and government contracting. Tech startups filter me out early, usually because I don't have Docs-as-Code experience. That's a gap I can close, but I wouldn't have seen it clearly without a system.</p>
-
-  <p>My pipeline right now has four live items: Metro-North Railroad, Censis Technologies, Planet Pharma via Medtronic, and a fractional pitch to Bluecrest. I know exactly where each one stands, who the contact is, what the salary range looks like, and what the next action is.</p>
-
-  <h2>The skills transfer</h2>
-
-  <p>Twenty years of technical documentation and knowledge management is, among other things, training in information architecture and workflow design. Knowing what to track, what to ignore, and where things live. Those skills don't stop mattering between jobs. That's when they matter most.</p>
-
-  <p>The code is on GitHub: <a href="https://github.com/davidgolden99/job-search" target="_blank">github.com/davidgolden99/job-search</a></p>
+  <p>Building the tool didn't change what I could afford. It made the decision obvious instead of approximate.</p>
 
 </article>
 
 <div class="post-footer">
   <a href="/blog/">← Back to Blog</a>
-  <a href="mailto:david@davidgolden.io?subject=Re: your dashboard post">Reply by email</a>
+  <a href="mailto:david@davidgolden.io?subject=Re: your co-op math post">Reply by email</a>
 </div>
 
 <footer>
