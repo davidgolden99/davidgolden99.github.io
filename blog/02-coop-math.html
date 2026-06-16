@@ -152,41 +152,39 @@
 
 <article>
 
-  <p>I'm selling my house in Connecticut and buying a co-op in the Bronx at the same time. This turns out to be harder to model than I expected — not because of the moving parts individually, but because of how they connect.</p>
+  <p>Nobody tells you about the co-op math trap until you're already in it.</p>
+
+  <p>I'm selling my house in Connecticut and buying a co-op in the Bronx at the same time. Great plan. Then I sat down to model it.</p>
 
   <h2>The problem</h2>
 
-  <p>Co-op boards in New York typically require you to hold a reserve in liquid assets after closing. Not at closing — after. The board wants to see that you can cover your monthly obligations even if something goes wrong. Depending on the building, that requirement might be anywhere from six to twenty-four months of combined mortgage payment and maintenance.</p>
+  <p>Co-op boards require you to hold a reserve in liquid assets after closing. Not at closing. After. We're talking 6 to 24 months of combined mortgage and maintenance sitting in an account, untouched, to prove you can cover the payments. The catch: that reserve comes out of your sale proceeds, which shrinks your down payment, which grows your loan, which changes your monthly mortgage, which is exactly what the reserve is calculated from.</p>
 
-  <p>That creates a circular problem.</p>
+  <p>So the reserve depends on the mortgage. The mortgage depends on the down payment. The down payment depends on the reserve.</p>
 
-  <p>Your down payment determines your loan amount. Your loan amount determines your mortgage payment. Your mortgage payment determines how much reserve the board requires. And the reserve is money you hold back from your available proceeds — which reduces what you can put toward a down payment.</p>
-
-  <p>Each variable depends on the others. You can't solve for one without knowing the rest.</p>
+  <p>Pick a number. Any number.</p>
 
   <h2>The math</h2>
 
-  <p>I could have iterated — guess a reserve, compute a mortgage, recompute the reserve, repeat until it converges. That works. But there's an exact solution.</p>
-
-  <p>Let <em>A</em> be your available proceeds after selling costs and debt payoff. Let <em>P</em> be the purchase price, <em>m</em> the monthly maintenance, <em>N</em> the required reserve months, and <em>k</em> the mortgage payment factor for a given rate and term. The reserve satisfies:</p>
+  <p>I could have guessed and iterated until it converged. Instead I worked out the closed-form algebraic solution. Let <em>A</em> be your available proceeds after selling costs and debt payoff, <em>P</em> the purchase price, <em>m</em> the monthly maintenance, <em>N</em> the required reserve months, and <em>k</em> the mortgage payment factor for your rate and term:</p>
 
   <div class="formula">reserve = N × (k × (P − A) + m) / (1 − N × k)</div>
 
-  <p>One equation, one answer. Plug in your numbers, get the exact reserve, down payment, and loan amount — no approximation.</p>
+  <p>One equation. Exact answer. No guessing required.</p>
 
   <h2>The tool</h2>
 
-  <p>I added an interactive calculator to the home sale dashboard I was already running. You dial in a sale price, a purchase price and maintenance figure, a mortgage rate and term, and the board's reserve requirement. Everything recalculates on every keystroke.</p>
+  <p>I added an interactive calculator to the home sale dashboard I was already running. Sale price, purchase price, maintenance, rate, term, reserve months. Everything recalculates on every keystroke.</p>
 
-  <p>The monthly total gets color coding: green if you're comfortable, gold if you're stretching, red if it's too much. There's a save function that snapshots the inputs and outputs to a local file, and a CSV export for any scenario you want to revisit. The whole thing runs locally — no data leaves the machine.</p>
+  <p>The monthly total goes green if you're comfortable, gold if you're stretching, red if it's too much. There's a save function that snapshots the inputs and outputs to a local file, and a CSV export for anything you want to revisit. The whole thing runs locally. No data leaves the machine.</p>
 
   <h2>What it produced</h2>
 
-  <p>Running the numbers on the first building I viewed made the tradeoff immediate. The views were spectacular. The units needed work. And the board required twenty-four months of reserves — nearly double what I'd find elsewhere in the neighborhood. The tool made the cost of that requirement concrete, not abstract. I passed.</p>
+  <p>Running the numbers on the first building I viewed made the answer pretty clear. Views to die for. Units needed real work. Board required 24 months of reserves.</p>
 
-  <p>Now I have a clear target range for the search: a purchase price ceiling, a maintenance ceiling, a reserve months assumption, and a monthly total I'm comfortable with. Every new listing gets measured against those numbers before I schedule a showing.</p>
+  <p>Hard pass.</p>
 
-  <p>Building the tool didn't change what I could afford. It made the decision obvious instead of approximate.</p>
+  <p>Now I have a firm target range: a purchase price ceiling, a maintenance ceiling, and a monthly total I'm comfortable with. Every new listing gets measured against those numbers before I schedule a showing. The tool didn't change what I could afford. It just made the decision obvious instead of approximate.</p>
 
 </article>
 
