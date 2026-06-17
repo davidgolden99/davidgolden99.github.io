@@ -4,6 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>David Golden — Senior Technical Writer</title>
+  <!-- Schema.org Person -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "David Golden",
+    "jobTitle": "Senior Technical Writer",
+    "url": "https://davidgolden.io",
+    "email": "david@davidgolden.io",
+    "sameAs": ["https://linkedin.com/in/davidgolden99"]
+  }
+  </script>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-X81694L2BY"></script>
   <script>
@@ -116,12 +128,33 @@
 
     .hero .tagline strong { color: #fff; }
 
+    .hero .hero-sub {
+      font-size: clamp(0.875rem, 2vw, 1rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.6);
+      max-width: 560px;
+      margin: -0.75rem auto 2rem;
+      line-height: 1.5;
+    }
+
     .hero-cta {
       display: flex;
       gap: 1rem;
       justify-content: center;
       flex-wrap: wrap;
     }
+
+    .hero-resume {
+      display: block;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.55);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.15s;
+    }
+
+    .hero-resume:hover { color: rgba(255,255,255,0.85); }
 
     .btn {
       display: inline-block;
@@ -501,10 +534,12 @@
   <p class="tagline">
     <strong>I get your customers off the support page</strong> <span style="font-weight:300">and back to their tasks.</span>
   </p>
+  <p class="hero-sub">Structured content your customers can find — and your AI support tools can actually use.</p>
   <div class="hero-cta">
     <a href="#work" class="btn btn-primary">See my work</a>
     <a href="#contact" class="btn btn-outline">Get in touch</a>
   </div>
+  <a href="/david_golden_resume.pdf" download class="hero-resume">Download résumé</a>
 </div>
 
 <!-- ── Stats ────────────────────────────────────────────────────── -->
@@ -614,20 +649,20 @@
             </div>
           </dl>
           <div class="card-footer">
-            <a href="http://eureka.pitneybowes.com/sendpro-c-series/gb/SendPro-C-Guided-Solution-Tool-en_GB/story_html5.html" class="card-link" target="_blank">View demo →</a>
+            <a href="http://eureka.pitneybowes.com/sendpro-c-series/gb/SendPro-C-Guided-Solution-Tool-en_GB/story_html5.html" class="card-link" target="_blank">View Guided Troubleshooting demo →</a>
           </div>
         </div>
       </div>
 
       <!-- Card 4 -->
       <div class="card">
-        <p class="card-tag">Python · MySQL · Flask · Data Migration</p>
-        <h3>Music Library Catalog Migration — WPKN 89.5 FM <span class="card-chevron" aria-hidden="true">▾</span></h3>
+        <p class="card-tag">Taxonomy Design · Information Architecture · Python · MySQL · Flask</p>
+        <h3>Content Engineering & Taxonomy Design — WPKN 89.5 FM <span class="card-chevron" aria-hidden="true">▾</span></h3>
         <div class="card-body">
           <dl>
             <div class="card-block">
               <dt>Problem</dt>
-              <dd>A 60-year catalog (dating to 1963) lived in Microsoft Access, assembled from paper cards, dBASE, and Excel over decades. Programmers searched exported spreadsheets on Google Drive. 23,772 digital files on a server drive were uncatalogued entirely.</dd>
+              <dd>No controlled vocabulary. No relational schema. No search. A 60-year music catalog (dating to 1963) had grown across paper cards, dBASE, Access, and Excel — with 23,772 digital files sitting on a server drive, completely uncatalogued.</dd>
             </div>
             <div class="card-block">
               <dt>What I did</dt>
@@ -639,7 +674,7 @@
             </div>
           </dl>
           <div class="card-footer">
-            <a href="#contact" class="card-link">Request demo →</a>
+            <a href="#contact" class="card-link">Request WPKN catalog demo →</a>
           </div>
         </div>
       </div>
@@ -668,6 +703,9 @@
           Knowledge base programs built to carry a company's primary support
           deflection load. Python and SQL come in when the documentation needs
           tooling around it: migration scripts, automation, the occasional Flask app.
+        </p>
+        <p>
+          Copilot and Claude Code are in the workflow. The content I produce is structured so AI tools can actually use it.
         </p>
         <p>
           Based in Milford, CT, available for full-time roles and fractional

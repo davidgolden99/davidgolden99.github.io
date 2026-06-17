@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why your AI support agent keeps getting it wrong — David Golden</title>
+  <meta name="description" content="Companies build AI support agents on top of their documentation and watch them give wrong answers. The problem isn't the model. It's the content architecture." />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X81694L2BY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-X81694L2BY');
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0D2B45;
+      --blue:   #1A6BB5;
+      --blue-lt:#EBF4FF;
+      --gold:   #C9A84C;
+      --ink:    #1A1A1A;
+      --muted:  #5A6472;
+      --border: #DDE3EA;
+      --bg:     #FFFFFF;
+      --bg-alt: #F7F9FC;
+      --max:    1080px;
+      --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--ink); background: var(--bg); font-size: 16px; line-height: 1.6; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    nav .nav-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 54px;
+    }
+    nav .nav-name { color: #fff; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.875rem; letter-spacing: 0.02em; transition: color 0.15s; }
+    nav ul a:hover, nav ul a.active { color: #fff; }
+
+    .page-header {
+      background: var(--navy); color: #fff;
+      padding: 3.5rem 2rem 3rem;
+    }
+    .page-header-inner { max-width: 720px; margin: 0 auto; }
+    .breadcrumb { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 1rem; }
+    .breadcrumb a { color: rgba(255,255,255,0.6); text-decoration: none; }
+    .breadcrumb a:hover { color: #fff; }
+    .page-header h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; margin-bottom: 1rem; }
+    .post-meta { font-size: 0.8rem; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; }
+
+    article {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    article h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 2.25rem 0 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    article p {
+      font-size: 1.025rem;
+      line-height: 1.75;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+
+    article a { color: var(--blue); }
+    article a:hover { text-decoration: none; }
+
+    .post-footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem 3rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .post-footer a {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--blue);
+      text-decoration: none;
+    }
+    .post-footer a:hover { text-decoration: underline; }
+
+    footer {
+      background: var(--navy); color: rgba(255,255,255,0.45);
+      text-align: center; padding: 1.5rem 2rem; font-size: 0.8rem; margin-top: 2rem;
+    }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 480px) {
+      nav .nav-inner { padding: 0 1rem; }
+      nav ul { gap: 1rem; }
+      nav ul a { font-size: 0.8rem; }
+      article, .post-footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-name">David Golden</a>
+    <ul>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#contact">Contact</a></li>
+      <li><a href="/blog/" class="active">Blog</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="breadcrumb"><a href="/blog/">Blog</a> &nbsp;/</p>
+    <h1>Why your AI support agent keeps getting it wrong</h1>
+    <p class="post-meta">June 17, 2026 &nbsp;·&nbsp; Technical Writing &nbsp;·&nbsp; Information Architecture &nbsp;·&nbsp; AI</p>
+  </div>
+</div>
+
+<article>
+
+  <p>It's not the model.</p>
+
+  <p>Companies are building AI support agents on top of their documentation right now. They feed it their help articles and KB content, wait for the model to answer support questions, and watch it give confidently wrong answers. Edge cases missed. Instructions that don't match the product. Users who get the right topic but the wrong version.</p>
+
+  <p>The first instinct is to blame the AI. Try a different model. Tune the retrieval. But most of the time, the problem is the source material.</p>
+
+  <h2>Documentation written for browsing fails at search</h2>
+
+  <p>A human reading a help article will fill in gaps from context. They'll see a heading like "Advanced Settings" and understand it's about configuration. They'll scan until something looks relevant and read from there.</p>
+
+  <p>A retrieval system doesn't do that. It chunks the text, embeds it, and matches it against a query. If an article uses "user" in paragraph two and "operator" in paragraph four to mean the same person, those are two different concepts as far as the model is concerned. If the help content is organized around features ("The Export Menu") instead of tasks ("How to export a report"), the model retrieves a feature description when the user needs step-by-step instructions.</p>
+
+  <p>Terminology drift and shallow taxonomy are part of it. So is feature-based structure. These are content architecture problems, not AI problems.</p>
+
+  <h2>What structured for retrieval actually means</h2>
+
+  <p>Last year I migrated 145,000 music catalog records for WPKN 89.5 FM. The catalog had accumulated across 60 years of paper cards, dBASE, Access, and Excel. The genre field alone had over 110,000 entries representing maybe 43 real categories. "Jazz," "jazz," "Jazz/Vocal," "Vocal Jazz," "JAZZ," and "classic jazz" were all in there as distinct values.</p>
+
+  <p>The first task was building a controlled vocabulary. Forty-three terms. Every record maps to one of them. The search interface works because the taxonomy is clean. When someone queries "jazz," they get jazz.</p>
+
+  <p>An AI support agent consuming a knowledge base where "contact support" appears in 200 articles, each meaning something slightly different, has the same problem that catalog had before the taxonomy was cleaned. The model can't resolve ambiguity that the content never resolved.</p>
+
+  <h2>The skill that transfers</h2>
+
+  <p>At Pitney Bowes I built and maintained a knowledge base cited in over 1,700 support cases. The reason it worked was topic-based structure: one article, one task, consistent terminology. A reader who found an article could find the answer. Whether that reader was a customer or an automated retrieval system didn't change what the article needed to do.</p>
+
+  <p>Clean controlled vocabulary and consistent terminology. Task-based structure, with a taxonomy that reflects how users actually think about the problem. That's what makes content usable by an AI support agent. Not clever prompting or a better embedding model.</p>
+
+  <h2>The packaging problem</h2>
+
+  <p>Most documentation is not written this way. It grew. Products changed, people added to it, nobody maintained the taxonomy. The docs are technically accurate and practically unusable. Not by customers. Definitely not by the AI system the company just built on top of them.</p>
+
+  <p>The writer who can fix that is not the one who knows the most about large language models. It's the one who understands information architecture. Those people have been around for a while. They've just been writing user guides.</p>
+
+</article>
+
+<div class="post-footer">
+  <a href="/blog/">← Back to Blog</a>
+  <a href="mailto:david@davidgolden.io?subject=Re: your AI docs post">Reply by email</a>
+</div>
+
+<footer>
+  <p>David Golden &nbsp;·&nbsp; <a href="mailto:david@davidgolden.io">david@davidgolden.io</a> &nbsp;·&nbsp; <a href="https://linkedin.com/in/davidgolden99" target="_blank">LinkedIn</a></p>
+</footer>
+
+</body>
+</html>
