@@ -109,11 +109,80 @@
     footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
     footer a:hover { color: #fff; }
 
+    .post-cta {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem 2rem;
+    }
+    .post-cta p {
+      background: var(--blue-lt);
+      border-left: 3px solid var(--gold);
+      padding: 1.25rem 1.5rem;
+      border-radius: 0 4px 4px 0;
+      font-size: 1.025rem;
+      line-height: 1.6;
+      margin: 0;
+      color: var(--ink);
+    }
+    .post-cta a {
+      color: var(--blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .post-cta a:hover { text-decoration: underline; }
+
+    .before-after {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .ba-panel {
+      border-radius: 4px;
+      overflow: hidden;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .ba-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+    }
+    .ba-before .ba-label { background: #C0392B; color: #fff; }
+    .ba-after  .ba-label { background: #27AE60; color: #fff; }
+    .ba-content {
+      padding: 1rem 1rem 1.1rem;
+      border: 1px solid var(--border);
+      border-top: none;
+    }
+    .ba-before .ba-content { background: #FFF8F8; }
+    .ba-after  .ba-content { background: #F4FBF4; }
+    .ba-doc-heading {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--navy);
+      margin-bottom: 0.6rem;
+    }
+    .ba-content p { margin-bottom: 0; font-size: 0.9rem; line-height: 1.65; color: var(--ink); }
+    .ba-content ol { padding-left: 1.25rem; margin: 0; }
+    .ba-content ol li { margin-bottom: 0.35rem; color: var(--ink); }
+    .ba-content ol li:last-child { margin-bottom: 0; }
+    .drift { background: #FFE5E5; border-radius: 2px; padding: 0 2px; }
+    .ba-caption {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: -0.5rem;
+      line-height: 1.6;
+    }
+
     @media (max-width: 480px) {
+      .before-after { grid-template-columns: 1fr; }
       nav .nav-inner { padding: 0 1rem; }
       nav ul { gap: 1rem; }
       nav ul a { font-size: 0.8rem; }
-      article, .post-footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+      article, .post-footer, .post-cta { padding-left: 1.25rem; padding-right: 1.25rem; }
     }
   </style>
 </head>
@@ -143,7 +212,7 @@
 
   <p>It's not the model.</p>
 
-  <p>Companies are building AI support agents on top of their documentation right now. They feed it their help articles and KB content, wait for the model to answer support questions, and watch it give confidently wrong answers. Edge cases missed. Instructions that don't match the product. Users who get the right topic but the wrong version.</p>
+  <p>Companies are building AI support agents on top of their documentation right now. The approach is called retrieval-augmented generation, or RAG: feed the model your help articles and KB content, have it pull the relevant pieces, and let it answer support questions from that source. Then watch it give confidently wrong answers. Edge cases missed. Instructions that don't match the product. Users who get the right topic but the wrong version.</p>
 
   <p>The first instinct is to blame the AI. Try a different model. Tune the retrieval. But most of the time, the problem is the source material.</p>
 
@@ -151,15 +220,37 @@
 
   <p>A human reading a help article will fill in gaps from context. They'll see a heading like "Advanced Settings" and understand it's about configuration. They'll scan until something looks relevant and read from there.</p>
 
-  <p>A retrieval system doesn't do that. It chunks the text, embeds it, and matches it against a query. If an article uses "user" in paragraph two and "operator" in paragraph four to mean the same person, those are two different concepts as far as the model is concerned. If the help content is organized around features ("The Export Menu") instead of tasks ("How to export a report"), the model retrieves a feature description when the user needs step-by-step instructions.</p>
+  <p>A retrieval system doesn't do that. It splits the content into chunks, converts those chunks into embeddings, and matches them against a query. If an article uses "user" in paragraph two and "operator" in paragraph four to mean the same person, those are two different concepts as far as the model is concerned. If the help content is organized around features ("The Export Menu") instead of tasks ("How to export a report"), the model retrieves a feature description when the user needs step-by-step instructions.</p>
 
   <p>Terminology drift and shallow taxonomy are part of it. So is feature-based structure. These are content architecture problems, not AI problems.</p>
+
+  <div class="before-after">
+    <div class="ba-panel ba-before">
+      <div class="ba-label">Before</div>
+      <div class="ba-content">
+        <p class="ba-doc-heading">The Export Menu</p>
+        <p>The Export Menu allows <span class="drift">operators</span> to download data in multiple formats. <span class="drift">Users</span> can access it from the top navigation bar. Click Export to see available options. The <span class="drift">operator</span> can choose CSV, PDF, or Excel. Once the <span class="drift">user</span> selects a format, the system generates the file.</p>
+      </div>
+    </div>
+    <div class="ba-panel ba-after">
+      <div class="ba-label">After</div>
+      <div class="ba-content">
+        <p class="ba-doc-heading">How to export a report</p>
+        <ol>
+          <li>In the top navigation bar, click <strong>Export</strong>.</li>
+          <li>Select a format: CSV, PDF, or Excel.</li>
+          <li>Click <strong>Download</strong>. The file saves to your downloads folder.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <p class="ba-caption">Same feature. The "before" alternates between "operators" and "users" four times in five sentences — a retrieval system treats those as different concepts. The "after" uses a task-based heading and consistent second-person voice throughout.</p>
 
   <h2>What structured for retrieval actually means</h2>
 
   <p>Last year I migrated 145,000 music catalog records for WPKN 89.5 FM. The catalog had accumulated across 60 years of paper cards, dBASE, Access, and Excel. The genre field alone had over 110,000 entries representing maybe 43 real categories. "Jazz," "jazz," "Jazz/Vocal," "Vocal Jazz," "JAZZ," and "classic jazz" were all in there as distinct values.</p>
 
-  <p>The first task was building a controlled vocabulary. Forty-three terms. Every record maps to one of them. The search interface works because the taxonomy is clean. When someone queries "jazz," they get jazz.</p>
+  <p>The first task was building a controlled vocabulary. Forty-three terms. Every record maps to one of them. That's a metadata problem as much as a content problem. The search interface works because the taxonomy is clean. When someone queries "jazz," they get jazz.</p>
 
   <p>An AI support agent consuming a knowledge base where "contact support" appears in 200 articles, each meaning something slightly different, has the same problem that catalog had before the taxonomy was cleaned. The model can't resolve ambiguity that the content never resolved.</p>
 
@@ -176,6 +267,10 @@
   <p>The writer who can fix that is not the one who knows the most about large language models. It's the one who understands information architecture. Those people have been around for a while. They've just been writing user guides.</p>
 
 </article>
+
+<div class="post-cta">
+  <p>If your AI agent is doing this, the fix starts with a content audit. That's the work I do. <a href="mailto:david@davidgolden.io?subject=Content audit inquiry">Reach out →</a></p>
+</div>
 
 <div class="post-footer">
   <a href="/blog/">← Back to Blog</a>
