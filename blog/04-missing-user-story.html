@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Case of the Missing User Story — David Golden</title>
+  <meta name="description" content="Features ship before documentation does. Here's the one-question interview technique that closes the gap — and the Excel tool that makes it repeatable." />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X81694L2BY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-X81694L2BY');
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0D2B45;
+      --blue:   #1A6BB5;
+      --blue-lt:#EBF4FF;
+      --gold:   #C9A84C;
+      --ink:    #1A1A1A;
+      --muted:  #5A6472;
+      --border: #DDE3EA;
+      --bg:     #FFFFFF;
+      --bg-alt: #F7F9FC;
+      --max:    1080px;
+      --font:   -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); color: var(--ink); background: var(--bg); font-size: 16px; line-height: 1.6; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    nav .nav-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 54px;
+    }
+    nav .nav-name { color: #fff; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em; text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.875rem; letter-spacing: 0.02em; transition: color 0.15s; }
+    nav ul a:hover, nav ul a.active { color: #fff; }
+
+    .page-header {
+      background: var(--navy); color: #fff;
+      padding: 3.5rem 2rem 3rem;
+    }
+    .page-header-inner { max-width: 720px; margin: 0 auto; }
+    .breadcrumb { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 1rem; }
+    .breadcrumb a { color: rgba(255,255,255,0.6); text-decoration: none; }
+    .breadcrumb a:hover { color: #fff; }
+    .page-header h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; margin-bottom: 1rem; }
+    .post-meta { font-size: 0.8rem; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; }
+
+    article {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 2rem 4rem;
+    }
+
+    article h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 2.25rem 0 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    article p {
+      font-size: 1.025rem;
+      line-height: 1.75;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+
+    article a { color: var(--blue); }
+    article a:hover { text-decoration: none; }
+
+    article table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    article th {
+      background: var(--navy);
+      color: #fff;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    article td {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      vertical-align: top;
+    }
+    article tr:nth-child(even) td { background: var(--bg-alt); }
+
+    article code {
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 0.85em;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.1em 0.35em;
+    }
+
+    .post-footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem 3rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .post-footer a {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--blue);
+      text-decoration: none;
+    }
+    .post-footer a:hover { text-decoration: underline; }
+
+    .post-cta {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem 2rem;
+    }
+    .post-cta p {
+      background: var(--blue-lt);
+      border-left: 3px solid var(--gold);
+      padding: 1.25rem 1.5rem;
+      border-radius: 0 4px 4px 0;
+      font-size: 1.025rem;
+      line-height: 1.6;
+      margin: 0;
+      color: var(--ink);
+    }
+    .post-cta a {
+      color: var(--blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .post-cta a:hover { text-decoration: underline; }
+
+    footer {
+      background: var(--navy); color: rgba(255,255,255,0.45);
+      text-align: center; padding: 1.5rem 2rem; font-size: 0.8rem; margin-top: 2rem;
+    }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 480px) {
+      nav .nav-inner { padding: 0 1rem; }
+      nav ul { gap: 1rem; }
+      nav ul a { font-size: 0.8rem; }
+      article, .post-footer, .post-cta { padding-left: 1.25rem; padding-right: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-name">David Golden</a>
+    <ul>
+      <li><a href="/#work">Work</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/#contact">Contact</a></li>
+      <li><a href="/blog/" class="active">Blog</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="breadcrumb"><a href="/blog/">Blog</a> &nbsp;/</p>
+    <h1>The Case of the Missing User Story</h1>
+    <p class="post-meta">June 24, 2026 &nbsp;·&nbsp; Technical Writing &nbsp;·&nbsp; Documentation &nbsp;·&nbsp; Process</p>
+  </div>
+</div>
+
+<article>
+
+  <p>It usually starts in a demo. There's a developer eagerly showing off a new feature&#8212;so new it's not in Jira. Not in any source I know of. It's just there. Why? Apparently somebody asked for it.</p>
+
+  <h2>Why it happens</h2>
+
+  <p>To be fair, most developers I work with have been good about user stories and following the process. I had one team in particular where the product department worked very closely with customers. Requests would come in and changes would come out. Great for customer support. A lot of playing catch-up on the documentation side.</p>
+
+  <h2>&#8220;So what?&#8221;</h2>
+
+  <p>&#8220;So What&#8221; is not just a cool Miles Davis track. As an undergrad I had it drilled into my head: if you couldn't answer &#8220;so what?&#8221; you weren't ready to start writing. In technical documentation, &#8220;so what?&#8221; is your end user's question. The answer is &#8220;So I can&#8230;.&#8221;</p>
+
+  <p>The old model was a 400-page manual that walked you through every menu item without telling you how to do anything. Somewhere on the other side, a frustrated user trying to figure out how to get something done. We've tightened up since then, breaking manuals into topics and topics into tasks. Even in a topic-based format, a feature walk-through is unhelpful. The user story forces the task framing. Who is going to do something? What are they going to do? What's the result? The combination of <em>who</em>, <em>what</em>, <em>why</em>, and <em>so I can</em> is what separates useful documentation from noise.</p>
+
+  <h2>The tool</h2>
+
+  <p>All I needed was a one-liner. If the user story didn't exist, I had to generate one, so I built a little spreadsheet in Excel that did just that.</p>
+
+  <p>Why Excel? Because everyone has it, the formulas are simple, and it can be shared with anyone willing to fill it in. No training required. It exists and it works.</p>
+
+  <p>Three columns of input:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>User persona</th>
+        <th>Task</th>
+        <th>Result</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Technical writer</td>
+        <td>know what this function is for</td>
+        <td>write about it.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Behind the scenes are text strings and CONCAT formulas in hidden columns, with a paste-values column at the end to produce usable text. Columns A, C, and D hold the text strings:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>As a</th>
+        <th>I want to</th>
+        <th>so I can</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>As a</td>
+        <td>I want to</td>
+        <td>so I can</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Column G concatenates everything:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>User story</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>=CONCAT(A2," ",B2," ",C2," ",D2," ",E2," ",F2)</code></td>
+      </tr>
+      <tr>
+        <td>As a Technical writer I want to know what this function is for so I can write about it.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>A second tab has a note: &#8220;Use Paste Special - Paste Values.&#8221; The usable text stays out of the way of the data entry and formulas.</p>
+
+  <h2>In practice</h2>
+
+  <p>In a typical session I'd ask the questions and fill it in myself. If the SME seemed receptive I'd show them what I was doing. At the end I'd give them the final sentence to validate: one complete sentence, easy to confirm or correct. Product team was happy. Service team was happy. The tool made the interview feel low-stakes.</p>
+
+  <p>Every feature has a &#8220;so I can.&#8221; If nobody can answer it, that's the real problem&#8212;not the missing documentation. Technical writing is 80% interviewing.</p>
+
+</article>
+
+<div class="post-cta">
+  <p>If your team is shipping features without user stories, documentation will always be catching up. That's a process problem, and it's fixable. <a href="mailto:david@davidgolden.io?subject=Documentation process">Reach out &#8594;</a></p>
+</div>
+
+<div class="post-footer">
+  <a href="/blog/">&#8592; Back to Blog</a>
+  <a href="mailto:david@davidgolden.io?subject=Re: the missing user story post">Reply by email</a>
+</div>
+
+<footer>
+  <p>David Golden &nbsp;&#183;&nbsp; <a href="mailto:david@davidgolden.io">david@davidgolden.io</a> &nbsp;&#183;&nbsp; <a href="https://linkedin.com/in/davidgolden99" target="_blank">LinkedIn</a></p>
+</footer>
+
+</body>
+</html>
